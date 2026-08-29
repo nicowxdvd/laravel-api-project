@@ -32,7 +32,7 @@ class User extends Authenticatable
 
     //(Inverse One-to-Many)
     public function role(){
-        return this->belongsTo(Role:class);
+        return this->belongsTo(Role::class);
     }
 
     //(One-to-One)
