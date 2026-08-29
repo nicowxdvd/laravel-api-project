@@ -41,4 +41,15 @@ class User extends Authenticatable
     {
         return $this->hasOne(UserProfile::class);
     }
+
+    // Métodos obligatorios para JWTSubject
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+
+    public function getJWTCustomClaims()
+    {
+        return [];
+    }
 }
