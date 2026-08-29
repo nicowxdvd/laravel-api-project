@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-#[Fillable(['name', 'email', 'password'])]
+#[Fillable(['first_name', 'last_name', 'email', 'password', 'is_active', 'role_id'])]
 #[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable
 {
@@ -30,13 +30,15 @@ class User extends Authenticatable
         ];
     }
 
-    //(Inverse One-to-Many)
-    public function role(){
-        return this->belongsTo(Role::class);
+    // (Inverse One-to-Many)
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
     }
 
-    //(One-to-One)
-    public function profle(){
-        return this->hasOne(UserProfile::class);
+    // (One-to-One)
+    public function profile()
+    {
+        return $this->hasOne(UserProfile::class);
     }
 }
