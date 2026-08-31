@@ -13,7 +13,20 @@ class RoleController extends Controller
      */
     public function index(): JsonResponse
     {
-        return response()->json(Role::all());
+        $query = Role::query()->select('id', 'name', 'description', 'is_active');
+        // Si viene el parámetro 'is_active', filtramos por su valor booleano
+        if ($request->has('is_active')) {
+            // filter_var convierte los strings 'true', '1', 'false', '0' a booleanos reales
+            $isActive = filter_var($request->query('is_active'), FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
+
+            if ($isActive !== null) {
+                $query->where('is_active', $isActive);
+            }
+        }
+        // Orden alfabético ascendente (A-Z) por el campo 'name'
+        $query->orderBy('name', 'asc')->limit(100);
+
+        return response()->json($query->get());
     }
 
     /**
